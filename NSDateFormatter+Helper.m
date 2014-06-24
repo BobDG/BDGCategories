@@ -1,9 +1,8 @@
 //
 //  NSDateFormatter+Helper.m
-//  TVGiDS.tv 1.0
 //
-//  Created by Bob de Graaf on 10-06-13.
-//  Copyright (c) 2013 MobilePioneers. All rights reserved.
+//  Created by Bob de Graaf on 01-02-14.
+//  Copyright (c) 2014 GraafICT. All rights reserved.
 //
 
 #import "NSDateFormatter+Helper.h"

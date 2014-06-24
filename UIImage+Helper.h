@@ -1,9 +1,8 @@
 //
 //  UIImage+UIImage_Helper.h
-//  MovementAnalyzer
 //
-//  Created by Bob de Graaf on 10-04-12.
-//  Copyright (c) 2012 GraafICT. All rights reserved.
+//  Created by Bob de Graaf on 01-02-14.
+//  Copyright (c) 2014 GraafICT. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

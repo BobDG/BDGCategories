@@ -1,8 +1,8 @@
 //
 //  NSDateHelper.m
 //
-//  Created by Bob de Graaf on 22-02-11.
-//  Copyright 2011 GraafICT. All rights reserved.
+//  Created by Bob de Graaf on 01-02-14.
+//  Copyright (c) 2014 GraafICT. All rights reserved.
 //
 
 #import "NSDate+Helper.h"

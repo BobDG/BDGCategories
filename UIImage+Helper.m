@@ -1,8 +1,8 @@
 //
-//  UIImage-Extensions.m
+//  UIImage-UIImage_Helper.m
 //
-//  Created by Hardy Macia on 7/1/09.
-//  Copyright 2009 Catamount Software. All rights reserved.
+//  Created by Bob de Graaf on 01-02-14.
+//  Copyright (c) 2014 GraafICT. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
