@@ -9,8 +9,15 @@
 
 @interface NSObject (Helper)
 
+//Public methods
+-(NSDictionary *)PRLclassProperties;
 -(id)initWithDictionarySafely:(NSDictionary *)dictionary;
 -(void)setValuesForKeysWithDictionarySafely:(NSDictionary *)keyedValues;
+
+//Class methods
++(id)mapObjects:(NSArray *)objects toClass:(Class)objectClass;
++(void)copyPropertiesFrom:(id)fromObject toObject:(id)toObject;
++(id)mapDictionary:(NSDictionary *)dictionary toClass:(Class)objectClass;
 +(id)convertDictionaryToObject:(NSDictionary *)dictionary objectType:(Class)objectType;
 +(NSMutableArray *)convertDictionaryToObjects:(NSArray *)dictionaries objectType:(Class)objectType;
 
