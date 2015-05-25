@@ -9,6 +9,46 @@
 
 @implementation NSDate (helper)
 
+-(NSDate *)dateByAddingDays:(NSInteger)days
+{
+    NSDateComponents *components = [NSDateComponents new];
+    components.day = days;
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    return [calendar dateByAddingComponents:components toDate:self options:0];
+}
+
+-(NSDate *)dateByAddingYears:(NSInteger)years
+{
+    NSDateComponents *components = [NSDateComponents new];
+    components.year = years;
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    return [calendar dateByAddingComponents:components toDate:self options:0];
+}
+
+-(NSDate *)dateByAddingMonths:(NSInteger)months
+{
+    NSDateComponents *components = [NSDateComponents new];
+    components.month = months;
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    return [calendar dateByAddingComponents:components toDate:self options:0];
+}
+
+-(NSDate *)normalizedDate
+{
+    NSDateComponents *normalizedCurrentDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:self];
+    return [[NSCalendar currentCalendar] dateFromComponents:normalizedCurrentDateComponents];
+}
+
+-(NSInteger)numberOfDaysUntilEndDate:(NSDate *)endDate
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitDay fromDate:self toDate:endDate options:0];
+    return [components day];
+}
+
 +(BOOL)checkDateIsDayBeforeYesterday:(NSDate *)date
 {
 	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];

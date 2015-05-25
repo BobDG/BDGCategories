@@ -9,6 +9,12 @@
 
 @interface NSDate (helper)
 
+-(NSDate *)normalizedDate;
+-(NSDate *)dateByAddingDays:(NSInteger)days;
+-(NSDate *)dateByAddingYears:(NSInteger)years;
+-(NSDate *)dateByAddingMonths:(NSInteger)months;
+-(NSInteger)numberOfDaysUntilEndDate:(NSDate *)endDate;
+
 +(BOOL)checkDateValid:(NSDate *)date;
 +(BOOL)checkDateIsToday:(NSDate *)date;
 +(BOOL)checkDateIsTomorrow:(NSDate *)date;

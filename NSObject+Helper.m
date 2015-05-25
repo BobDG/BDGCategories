@@ -38,17 +38,13 @@
 
 -(void)setValuesForKeysWithDictionarySafely:(NSDictionary *)keyedValues
 {
-    [keyedValues enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
-    {
-        @try
-        {
-            if(obj != [NSNull null])
-            {
+    [keyedValues enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        @try {
+            if(obj != [NSNull null]) {
                 [self setValue:obj forKey:key];
             }
         }
-        @catch(NSException * e)
-        {
+        @catch(NSException * e) {
             NSLog(@"Error tried to put: '%@' in a key that didn't exist:%@", obj, key);
         }
     }];
@@ -78,6 +74,10 @@
     for(NSString *propertyName in objectProperties.allKeys) {
         //Does the dictionary contain this value
         if(!dictionary[propertyName]) {
+            continue;
+        }
+        
+        if(dictionary[propertyName] == [NSNull null]) {
             continue;
         }
         
