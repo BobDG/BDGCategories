@@ -3,9 +3,9 @@
 Incredibly useful categories that I use in all my xCode projects!
 
 ## Installation using Cocoapods
-'''
+```
 pod 'BDGCategories'
-'''
+```
 
 ##Examples
 
