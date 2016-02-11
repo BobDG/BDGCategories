@@ -2,7 +2,7 @@
 
 Incredibly useful categories that I use in all my xCode projects!
 
-## Installation using Cocoapods
+## Installation using CocoaPods
 ```
 pod 'BDGCategories'
 ```
