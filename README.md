@@ -1,6 +1,6 @@
 # BDGCategories
 
-Incredibly useful categories that I use in all my xCode projects!
+Incredibly useful categories that I use in all my Xcode projects!
 
 ## Installation using Cocoapods
 ```
