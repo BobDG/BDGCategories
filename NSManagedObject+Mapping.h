@@ -13,6 +13,8 @@
     
 }
 
+-(void)copyPropertiesToObject:(NSManagedObject *)object;
+
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues context:(NSManagedObjectContext *)context;
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter;

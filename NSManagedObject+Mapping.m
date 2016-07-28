@@ -10,6 +10,20 @@
 
 @implementation NSManagedObject (Mapping)
 
+-(void)copyPropertiesToObject:(NSManagedObject *)object
+{
+    NSDictionary *fromAttributes = [[self entity] attributesByName];
+    NSArray *toAttributes = [[object entity] attributesByName].allKeys;
+    for(NSString *attributeName in fromAttributes) {
+        if(![toAttributes containsObject:attributeName]) {
+            continue;
+        }
+        
+        //Set it
+        [object setValue:[self valueForKey:attributeName] forKey:attributeName];
+    }
+}
+
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays
 {
     NSDictionary *attributes = [[self entity] attributesByName];
