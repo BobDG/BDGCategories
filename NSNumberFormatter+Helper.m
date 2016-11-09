@@ -17,7 +17,7 @@
     NSNumberFormatter *numberFormatter = [threadDictionary objectForKey:format];
     if(numberFormatter == nil)
     {
-        numberFormatter = [[NSDateFormatter alloc] init];
+        numberFormatter = [[NSNumberFormatter alloc] init];
         numberFormatter.numberStyle = NSNumberFormatterNoStyle;
         numberFormatter.locale = [NSLocale currentLocale];
         [threadDictionary setObject:numberFormatter forKey:format];
@@ -32,7 +32,7 @@
     NSNumberFormatter *numberFormatter = [threadDictionary objectForKey:format];
     if(numberFormatter == nil)
     {
-        numberFormatter = [[NSDateFormatter alloc] init];
+        numberFormatter = [[NSNumberFormatter alloc] init];
         numberFormatter.numberStyle = style;
         numberFormatter.locale = [NSLocale currentLocale];
         numberFormatter.minimumFractionDigits = numberFormatter.maximumFractionDigits = fractionDigits;
@@ -42,14 +42,14 @@
 }
 
 
-+(NSNumberFormatter *)currentNumberFormatterWithMinimumFractionDigits:minimumFractionDigits:(NSUInteger)minimumFractionDigits andMaximumFractionDigits:(NSUInteger)maximumFractionDigits
++(NSNumberFormatter *)currentNumberFormatterWithMinimumFractionDigits:(NSUInteger)minimumFractionDigits andMaximumFractionDigits:(NSUInteger)maximumFractionDigits
 {
     NSString *format = [NSString stringWithFormat:@"BDGNumberFormatter|minDigits:%@|maxDigits:%@", @(minimumFractionDigits), @(maximumFractionDigits)];
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
     NSNumberFormatter *numberFormatter = [threadDictionary objectForKey:format];
     if(numberFormatter == nil)
     {
-        numberFormatter = [[NSDateFormatter alloc] init];
+        numberFormatter = [[NSNumberFormatter alloc] init];
         numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
         numberFormatter.locale = [NSLocale currentLocale];
         numberFormatter.minimumFractionDigits = minimumFractionDigits;
@@ -66,7 +66,7 @@
     NSNumberFormatter *numberFormatter = [threadDictionary objectForKey:format];
     if(numberFormatter == nil)
     {
-        numberFormatter = [[NSDateFormatter alloc] init];
+        numberFormatter = [[NSNumberFormatter alloc] init];
         numberFormatter.numberStyle = style;
         numberFormatter.locale = [NSLocale currentLocale];
         numberFormatter.minimumFractionDigits = minimumFractionDigits;
