@@ -51,8 +51,8 @@
 
 +(BOOL)checkDateIsDayBeforeYesterday:(NSDate *)date
 {
-	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-	NSDateComponents *tomorrow = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[[NSDate date] dateByAddingTimeInterval:-2*86400]];
+	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+	NSDateComponents *tomorrow = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[[NSDate date] dateByAddingTimeInterval:-2*86400]];
 	if([tomorrow day] == [otherDay day] && [tomorrow month] == [otherDay month] && [tomorrow year] == [otherDay year])
 	{
 		return true;
@@ -62,8 +62,8 @@
 
 +(BOOL)checkDateIsYesterday:(NSDate *)date
 {
-	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-	NSDateComponents *tomorrow = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[[NSDate date] dateByAddingTimeInterval:-86400]];
+	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+	NSDateComponents *tomorrow = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[[NSDate date] dateByAddingTimeInterval:-86400]];
 	if([tomorrow day] == [otherDay day] && [tomorrow month] == [otherDay month] && [tomorrow year] == [otherDay year])
 	{
 		return true;
@@ -73,8 +73,8 @@
 
 +(BOOL)checkDateIsToday:(NSDate *)date
 {
-	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-	NSDateComponents *today = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+	NSDateComponents *today = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
 	if([today day] == [otherDay day] && [today month] == [otherDay month] && [today year] == [otherDay year]) 
 	{
 		return true;
@@ -84,8 +84,8 @@
 
 +(BOOL)checkDateIsTheSameDay:(NSDate *)date date2:(NSDate *)date2
 {
-    NSDateComponents *date1Comps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-	NSDateComponents *date2Comps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date2];
+    NSDateComponents *date1Comps = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+	NSDateComponents *date2Comps = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date2];
 	if([date1Comps day] == [date2Comps day] && [date1Comps month] == [date2Comps month] && [date1Comps year] == [date2Comps year])
 	{
 		return true;
@@ -95,8 +95,8 @@
 
 +(BOOL)checkDateIsTheSameYear:(NSDate *)date
 {
-    NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:date];
-	NSDateComponents *today = [[NSCalendar currentCalendar] components:NSYearCalendarUnit fromDate:[NSDate date]];
+    NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:date];
+	NSDateComponents *today = [[NSCalendar currentCalendar] components:NSCalendarUnitYear fromDate:[NSDate date]];
 	if([today year] == [otherDay year]) {
 		return true;
 	}
@@ -106,8 +106,8 @@
 +(BOOL)checkDateIsTodayIncludingNight:(NSDate *)date
 {
     date = [date dateByAddingTimeInterval:-(6*86400)];
-	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-	NSDateComponents *today = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+	NSDateComponents *today = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
 	if([today day] == [otherDay day] && [today month] == [otherDay month] && [today year] == [otherDay year])
 	{
 		return true;
@@ -117,8 +117,8 @@
 
 +(BOOL)checkDateIsTomorrow:(NSDate *)date
 {
-	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-	NSDateComponents *tomorrow = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[[NSDate date] dateByAddingTimeInterval:86400]];
+	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+	NSDateComponents *tomorrow = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[[NSDate date] dateByAddingTimeInterval:86400]];
 	if([tomorrow day] == [otherDay day] && [tomorrow month] == [otherDay month] && [tomorrow year] == [otherDay year])
 	{
 		return true;
@@ -128,8 +128,8 @@
 
 +(BOOL)checkDateIsDayAfterTomorrow:(NSDate *)date
 {
-	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-	NSDateComponents *tomorrow = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[[NSDate date] dateByAddingTimeInterval:2*86400]];
+	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+	NSDateComponents *tomorrow = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[[NSDate date] dateByAddingTimeInterval:2*86400]];
 	if([tomorrow day] == [otherDay day] && [tomorrow month] == [otherDay month] && [tomorrow year] == [otherDay year])
 	{
 		return true;
@@ -150,8 +150,8 @@
     else
     {
         //later
-        NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-        NSDateComponents *today = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:[NSDate date]];
+        NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+        NSDateComponents *today = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
         if([today day] == [otherDay day] && [today month] == [otherDay month] && [today year] == [otherDay year]) 
         {
             //NSLog(@"Still valid, only seconds matter!");
