@@ -37,4 +37,19 @@
     return dateFormatter;
 }
 
++(NSDateFormatter *)currentDateFormatterWithDateStyle:(NSDateFormatterStyle)dateStyle andTimeStyle:(NSDateFormatterStyle)timeStyle
+{
+    NSString *dfKey = [NSString stringWithFormat:@"%lu|%lu", dateStyle, timeStyle];
+    NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
+    NSDateFormatter *dateFormatter = [threadDictionary objectForKey:dfKey] ;
+    if(dateFormatter == nil)
+    {
+        dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:dateStyle];
+        [dateFormatter setTimeStyle:timeStyle];
+        [threadDictionary setObject:dateFormatter forKey:dfKey] ;
+    }
+    return dateFormatter;
+}
+
 @end
