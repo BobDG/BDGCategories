@@ -12,8 +12,11 @@
     
 }
 
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString*)format includeHours:(BOOL)includeHours;
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString*)format includeHours:(BOOL)includeHours withLocale:(NSLocale*)locale;
 +(NSDateFormatter *)currentDateFormatterWithFormat:(NSString*)format;
 +(NSDateFormatter *)currentDateFormatterWithFormat:(NSString*)format timeZone:(NSTimeZone *)timeZone;
++(NSDateFormatter *)currentDateFormatterWithDateStyle:(NSDateFormatterStyle)dateStyle;
 +(NSDateFormatter *)currentDateFormatterWithDateStyle:(NSDateFormatterStyle)dateStyle andTimeStyle:(NSDateFormatterStyle)timeStyle;
 
 @end
