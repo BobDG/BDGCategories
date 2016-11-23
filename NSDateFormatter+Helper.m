@@ -9,6 +9,11 @@
 
 @implementation NSDateFormatter (Helper)
 
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format
+{
+    [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:false withLocale:[NSLocale currentLocale]];
+}
+
 +(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString*)format includeHours:(BOOL)includeHours
 {
     [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale]];
