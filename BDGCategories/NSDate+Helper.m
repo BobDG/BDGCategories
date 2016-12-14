@@ -49,6 +49,13 @@
     return [components day];
 }
 
+-(NSInteger)numberOfYearsUntilEndDate:(NSDate *)endDate
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear fromDate:self toDate:endDate options:0];
+    return [components year];
+}
+
 +(BOOL)checkDateIsDayBeforeYesterday:(NSDate *)date
 {
 	NSDateComponents *otherDay = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];

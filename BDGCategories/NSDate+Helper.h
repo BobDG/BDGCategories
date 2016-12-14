@@ -14,6 +14,7 @@
 -(NSDate *)dateByAddingYears:(NSInteger)years;
 -(NSDate *)dateByAddingMonths:(NSInteger)months;
 -(NSInteger)numberOfDaysUntilEndDate:(NSDate *)endDate;
+-(NSInteger)numberOfYearsUntilEndDate:(NSDate *)endDate;
 
 +(BOOL)checkDateValid:(NSDate *)date;
 +(BOOL)checkDateIsToday:(NSDate *)date;
