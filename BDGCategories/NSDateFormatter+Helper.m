@@ -9,12 +9,17 @@
 
 @implementation NSDateFormatter (Helper)
 
-+(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format
+{
+    return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:false withLocale:[NSLocale currentLocale]];
+}
+
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString*)format includeHours:(BOOL)includeHours
 {
     return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale]];
 }
 
-+(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours withLocale:(NSLocale*)locale
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString*)format includeHours:(BOOL)includeHours withLocale:(NSLocale*)locale
 {
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     
@@ -26,7 +31,7 @@
         [mutableFormat appendString:formatStringForHours];
     }
     
-    //The components will be reordered according to the locale
+    // The components will be reordered according to the locale
     NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:mutableFormat options:0 locale:locale];
     dateFormatter.dateFormat = dateFormat;
     return dateFormatter;
@@ -62,7 +67,7 @@
 
 +(NSDateFormatter *)currentDateFormatterWithDateStyle:(NSDateFormatterStyle)dateStyle
 {
-    NSString *dfKey = [NSString stringWithFormat:@"%d", (int)dateStyle];
+    NSString *dfKey = [NSString stringWithFormat:@"%lu", dateStyle];
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
     NSDateFormatter *dateFormatter = [threadDictionary objectForKey:dfKey] ;
     if(dateFormatter == nil)
@@ -76,7 +81,7 @@
 
 +(NSDateFormatter *)currentDateFormatterWithDateStyle:(NSDateFormatterStyle)dateStyle andTimeStyle:(NSDateFormatterStyle)timeStyle
 {
-    NSString *dfKey = [NSString stringWithFormat:@"%d|%d", (int)dateStyle, (int)timeStyle];
+    NSString *dfKey = [NSString stringWithFormat:@"%lu|%lu", dateStyle, timeStyle];
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
     NSDateFormatter *dateFormatter = [threadDictionary objectForKey:dfKey] ;
     if(dateFormatter == nil)
