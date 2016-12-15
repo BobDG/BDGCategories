@@ -67,7 +67,7 @@
 
 +(NSDateFormatter *)currentDateFormatterWithDateStyle:(NSDateFormatterStyle)dateStyle
 {
-    NSString *dfKey = [NSString stringWithFormat:@"%lu", dateStyle];
+    NSString *dfKey = [NSString stringWithFormat:@"%d", (int)dateStyle];
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
     NSDateFormatter *dateFormatter = [threadDictionary objectForKey:dfKey] ;
     if(dateFormatter == nil)
@@ -81,7 +81,7 @@
 
 +(NSDateFormatter *)currentDateFormatterWithDateStyle:(NSDateFormatterStyle)dateStyle andTimeStyle:(NSDateFormatterStyle)timeStyle
 {
-    NSString *dfKey = [NSString stringWithFormat:@"%lu|%lu", dateStyle, timeStyle];
+    NSString *dfKey = [NSString stringWithFormat:@"%d|%d", (int)dateStyle, (int)timeStyle];
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
     NSDateFormatter *dateFormatter = [threadDictionary objectForKey:dfKey] ;
     if(dateFormatter == nil)
