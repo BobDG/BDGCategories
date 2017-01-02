@@ -24,6 +24,46 @@
     }
 }
 
+-(void)copyPropertiesToObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context excludeRelationships:(NSArray *)excludeRelationships
+{
+    NSDictionary *fromAttributes = [[self entity] attributesByName];
+    NSArray *toAttributes = [[object entity] attributesByName].allKeys;
+    for(NSString *attributeName in fromAttributes) {
+        if(![toAttributes containsObject:attributeName]) {
+            continue;
+        }
+        
+        //Set it
+        [object setValue:[self valueForKey:attributeName] forKey:attributeName];
+    }
+    
+    NSDictionary *relationships = [[self entity] relationshipsByName];
+    for(NSString *relationship in relationships) {
+        if([excludeRelationships containsObject:relationship]) {
+            continue;
+        }
+        
+        NSManagedObject *relationshipObject = (NSManagedObject *)[self valueForKey:relationship];
+        if(!relationshipObject) {
+            continue;
+        }
+        
+        //If the relationship does not exist, create the object and add the relation
+        NSString *relationShipClassName = [NSString stringWithFormat:@"%@%@", [[relationship substringToIndex:1] uppercaseString], [relationship substringFromIndex:1]];
+        
+        NSManagedObject *copyRelationshipObject = [NSEntityDescription insertNewObjectForEntityForName:relationShipClassName inManagedObjectContext:context];
+        [object setValue:copyRelationshipObject forKey:relationship];
+        
+        //Copy properties values
+        [relationshipObject copyPropertiesToObject:copyRelationshipObject context:context excludeRelationships:excludeRelationships];
+    }
+}
+
+-(void)copyPropertiesToObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context
+{
+    [self copyPropertiesToObject:object context:context];
+}
+
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays
 {
     NSDictionary *attributes = [[self entity] attributesByName];

@@ -14,6 +14,8 @@
 }
 
 -(void)copyPropertiesToObject:(NSManagedObject *)object;
+-(void)copyPropertiesToObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
+-(void)copyPropertiesToObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context excludeRelationships:(NSArray *)excludeRelationships;
 
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues;
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues context:(NSManagedObjectContext *)context;
