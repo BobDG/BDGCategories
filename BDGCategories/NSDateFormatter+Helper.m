@@ -31,7 +31,18 @@
 
 +(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours withLocale:(NSLocale *)locale timeZone:(NSTimeZone *)timeZone
 {
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    NSString *identifier = [NSString stringWithFormat:@"%@|%d|%@", format, includeHours, locale.localeIdentifier];
+    if(timeZone) {
+        identifier = [identifier stringByAppendingString:timeZone.abbreviation];
+    }
+    NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
+    NSDateFormatter *dateFormatter = [threadDictionary objectForKey:identifier];
+    if(dateFormatter) {
+        return dateFormatter;
+    }
+    
+    //Create it
+    dateFormatter = [NSDateFormatter new];
     if(timeZone) {
         [dateFormatter setTimeZone:timeZone];
     }
