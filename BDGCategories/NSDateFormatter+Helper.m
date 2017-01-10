@@ -14,14 +14,22 @@
     return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:false withLocale:[NSLocale currentLocale]];
 }
 
-+(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString*)format includeHours:(BOOL)includeHours
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours
 {
     return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale]];
 }
 
-+(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString*)format includeHours:(BOOL)includeHours withLocale:(NSLocale*)locale
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours timeZone:(NSTimeZone *)timeZone
+{
+    return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale] timeZone:timeZone];
+}
+
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours withLocale:(NSLocale *)locale timeZone:(NSTimeZone *)timeZone
 {
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    if(timeZone) {
+        [dateFormatter setTimeZone:timeZone];
+    }
     
     NSMutableString *mutableFormat = format.mutableCopy;
     [mutableFormat replaceOccurrencesOfString:@"h" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, mutableFormat.length)];
