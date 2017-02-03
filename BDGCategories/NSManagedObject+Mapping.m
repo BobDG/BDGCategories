@@ -64,7 +64,7 @@
     [self copyPropertiesToObject:object context:context];
 }
 
--(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays
+-(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary
 {
     NSDictionary *attributes = [[self entity] attributesByName];
     for(NSString *attribute in attributes) {
@@ -107,7 +107,7 @@
         if(!relationshipObject) {
             NSString *capitalizedFirstLetter = [[relationship substringToIndex:1] uppercaseString];
             NSString *otherLetters = [relationship substringFromIndex:1];
-            NSString *relationShipClassName = [NSString stringWithFormat:@"%@%@", capitalizedFirstLetter, otherLetters];            
+            NSString *relationShipClassName = [NSString stringWithFormat:@"%@%@", capitalizedFirstLetter, otherLetters];
             relationshipObject = [NSEntityDescription insertNewObjectForEntityForName:relationShipClassName inManagedObjectContext:context];
             [self setValue:relationshipObject forKey:relationship];
         }
@@ -132,17 +132,22 @@
             continue;
         }
         
-        if(![relationships objectForKey:key]) {
-            continue;
+        NSString *className;
+        if(mappingDictionary && mappingDictionary[key]) {
+            className = mappingDictionary[key];
         }
-        
-        //Sanity check
-        if(key.length<=1) {
-            continue;
+        else if([relationships objectForKey:key]) {
+            //Sanity check
+            if(key.length<=1) {
+                continue;
+            }
+            
+            //Classname
+            className = [[key capitalizedString] substringToIndex:key.length-1];
         }
-        
-        //Classname
-        NSString *className = [[key capitalizedString] substringToIndex:key.length-1];
+        else {
+            continue;
+        }       
         
         //Check classname
         if(!NSClassFromString(className)) {
@@ -164,6 +169,11 @@
             [set addObject:relationshipObject];
         }
     }
+}
+
+-(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays
+{
+    [self safeSetValuesForKeysWithDictionary:keyedValues dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:nil];
 }
 
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context
