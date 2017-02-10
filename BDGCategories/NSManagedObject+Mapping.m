@@ -66,6 +66,11 @@
 
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary
 {
+    [self safeSetValuesForKeysWithDictionary:keyedValues dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:nil];
+}
+
+-(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary excludeRelationships:(NSArray *)excludeRelationships
+{
     NSDictionary *attributes = [[self entity] attributesByName];
     for(NSString *attribute in attributes) {
         id value = [keyedValues objectForKey:attribute];
@@ -90,7 +95,11 @@
     }
     
     NSDictionary *relationships = [[self entity] relationshipsByName];
-    for(NSString *relationship in relationships) {
+    for(NSString *relationship in relationships) {        
+        if([excludeRelationships containsObject:relationship]) {
+            continue;
+        }
+        
         id value = [keyedValues objectForKey:relationship];
         if(value == nil) {
             continue;
