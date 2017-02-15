@@ -113,10 +113,17 @@
         
         //If the relationship does not exist, create the object and add the relation
         NSManagedObject *relationshipObject = (NSManagedObject *)[self valueForKey:relationship];
+        
         if(!relationshipObject) {
-            NSString *capitalizedFirstLetter = [[relationship substringToIndex:1] uppercaseString];
-            NSString *otherLetters = [relationship substringFromIndex:1];
-            NSString *relationShipClassName = [NSString stringWithFormat:@"%@%@", capitalizedFirstLetter, otherLetters];
+            NSString *relationShipClassName;
+            if(mappingDictionary && mappingDictionary[relationship]) {                
+                relationShipClassName = mappingDictionary[relationship];
+            }
+            else {
+                NSString *capitalizedFirstLetter = [[relationship substringToIndex:1] uppercaseString];
+                NSString *otherLetters = [relationship substringFromIndex:1];
+                relationShipClassName = [NSString stringWithFormat:@"%@%@", capitalizedFirstLetter, otherLetters];
+            }         
             relationshipObject = [NSEntityDescription insertNewObjectForEntityForName:relationShipClassName inManagedObjectContext:context];
             [self setValue:relationshipObject forKey:relationship];
         }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name           = 'BDGCategories'
-  s.version        = '0.0.23'
+  s.version        = '0.0.24'
   s.summary        = 'Incredibly useful categories for any xCode project'
   s.license 	   = 'MIT'
   s.description    = 'Really useful categories to use in every xCode project on UIView, UIImage, NSDate, NSDateFormatter, etc'
