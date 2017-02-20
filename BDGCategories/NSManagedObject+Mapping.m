@@ -10,6 +10,43 @@
 
 @implementation NSManagedObject (Mapping)
 
+-(NSDictionary *)dictionaryFromProperties
+{
+    return [self dictionaryFromProperties:nil];
+}
+
+-(NSDictionary *)dictionaryFromProperties:(NSDateFormatter *)dateFormatter
+{
+    //Create dictionary
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    
+    //Attributes
+    NSDictionary *attributes = [[self entity] attributesByName];
+    for(NSString *attributeName in attributes) {
+        //Get value
+        id value = [self valueForKey:attributeName];
+        
+        //No nil/nsnull values
+        if(value == nil) {
+            continue;
+        }
+        if(value == [NSNull null]) {
+            continue;
+        }
+        
+        //Optional dateformatter
+        NSAttributeType attributeType = [[attributes objectForKey:attributeName] attributeType];
+        if(attributeType == NSDateAttributeType && dateFormatter != nil) {
+            value = [dateFormatter stringFromDate:value];
+        }
+        
+        //Set it
+        dictionary[attributeName] = value;
+    }
+    return dictionary;
+}
+
+
 -(void)copyPropertiesToObject:(NSManagedObject *)object
 {
     NSDictionary *fromAttributes = [[self entity] attributesByName];
@@ -116,14 +153,14 @@
         
         if(!relationshipObject) {
             NSString *relationShipClassName;
-            if(mappingDictionary && mappingDictionary[relationship]) {                
+            if(mappingDictionary && mappingDictionary[relationship]) {
                 relationShipClassName = mappingDictionary[relationship];
             }
             else {
                 NSString *capitalizedFirstLetter = [[relationship substringToIndex:1] uppercaseString];
                 NSString *otherLetters = [relationship substringFromIndex:1];
                 relationShipClassName = [NSString stringWithFormat:@"%@%@", capitalizedFirstLetter, otherLetters];
-            }         
+            }
             relationshipObject = [NSEntityDescription insertNewObjectForEntityForName:relationShipClassName inManagedObjectContext:context];
             [self setValue:relationshipObject forKey:relationship];
         }

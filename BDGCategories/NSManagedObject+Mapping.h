@@ -13,6 +13,10 @@
     
 }
 
+-(NSDictionary *)dictionaryFromProperties;
+-(NSDictionary *)dictionaryFromProperties:(NSDateFormatter *)dateFormatter;
+
+
 -(void)copyPropertiesToObject:(NSManagedObject *)object;
 -(void)copyPropertiesToObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context;
 -(void)copyPropertiesToObject:(NSManagedObject *)object context:(NSManagedObjectContext *)context excludeRelationships:(NSArray *)excludeRelationships;
