@@ -131,8 +131,9 @@
         [self setValue:value forKey:attribute];
     }
     
+    
     NSDictionary *relationships = [[self entity] relationshipsByName];
-    for(NSString *relationship in relationships) {        
+    for(NSString *relationship in relationships) {
         if([excludeRelationships containsObject:relationship]) {
             continue;
         }
@@ -166,8 +167,9 @@
         }
         
         //Update values
-        [relationshipObject safeSetValuesForKeysWithDictionary:value dateFormatter:dateFormatter context:context];
+        [relationshipObject safeSetValuesForKeysWithDictionary:value dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships];
     }
+    
     
     //Special cases - array relationships!
     if(!includeArrays) {
@@ -215,7 +217,7 @@
             
             //Create and set values
             NSManagedObject *relationshipObject = [NSEntityDescription insertNewObjectForEntityForName:className inManagedObjectContext:context];
-            [relationshipObject safeSetValuesForKeysWithDictionary:valueDict dateFormatter:dateFormatter context:context includeArrays:includeArrays];
+            [relationshipObject safeSetValuesForKeysWithDictionary:valueDict dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships];
             
             //Add it
             NSMutableSet *set = [self mutableSetValueForKey:key];
