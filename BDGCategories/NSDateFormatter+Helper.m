@@ -19,6 +19,11 @@
     return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale]];
 }
 
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours forceHourPadding:(BOOL)forceHourPadding
+{
+    return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale] timeZone:nil forceHourPadding:forceHourPadding];
+}
+
 +(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours withLocale:(NSLocale *)locale
 {
     return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:locale timeZone:nil];
@@ -26,10 +31,15 @@
 
 +(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours timeZone:(NSTimeZone *)timeZone
 {
-    return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale] timeZone:timeZone];
+    return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale] timeZone:timeZone  forceHourPadding:false];
 }
 
 +(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours withLocale:(NSLocale *)locale timeZone:(NSTimeZone *)timeZone
+{
+    return [NSDateFormatter currentDateFormatterWithFormatToLocalize:format includeHours:includeHours withLocale:[NSLocale currentLocale] timeZone:timeZone forceHourPadding:false];
+}
+
++(NSDateFormatter *)currentDateFormatterWithFormatToLocalize:(NSString *)format includeHours:(BOOL)includeHours withLocale:(NSLocale *)locale timeZone:(NSTimeZone *)timeZone forceHourPadding:(BOOL)forceHourPadding
 {
     NSString *identifier = [NSString stringWithFormat:@"%@|%d|%@", format, includeHours, locale.localeIdentifier];
     if(timeZone) {
@@ -57,6 +67,31 @@
     
     // The components will be reordered according to the locale
     NSString *dateFormat = [NSDateFormatter dateFormatFromTemplate:mutableFormat options:0 locale:locale];
+    
+    if(forceHourPadding) {
+        //Create copy of the parsed format
+        mutableFormat = dateFormat.mutableCopy;
+        
+        //Separate characters
+        NSMutableArray *array = [NSMutableArray new];
+        [mutableFormat enumerateSubstringsInRange:NSMakeRange(0, [mutableFormat length]) options:NSStringEnumerationByComposedCharacterSequences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+            [array addObject:substring];
+        }] ;
+        
+        //Count characters
+        NSCountedSet * set = [[NSCountedSet alloc] initWithArray:array];
+        
+        //Loop through characters we actually want in the set
+        for(NSString *hourChar in @[@"h", @"H"]){
+            NSUInteger count =  [set countForObject:hourChar];
+            if(count == 1) {
+                [mutableFormat replaceOccurrencesOfString:hourChar withString:[hourChar stringByAppendingString:hourChar] options:0 range:NSMakeRange(0, mutableFormat.length)];
+                NSLog(@"%@", mutableFormat);
+                dateFormat = mutableFormat;
+            }
+        }
+    }
+    
     dateFormatter.dateFormat = dateFormat;
     return dateFormatter;
 }
