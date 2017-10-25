@@ -176,6 +176,10 @@
         return;
     }
     for(NSString *key in keyedValues.allKeys) {
+        if([excludeRelationships containsObject:key]) {
+            continue;
+        }
+        
         id value = keyedValues[key];
         if(![value isKindOfClass:[NSArray class]]) {
             continue;
