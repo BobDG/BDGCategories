@@ -29,5 +29,6 @@
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays;
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary;
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary excludeRelationships:(NSArray *)excludeRelationships;
+-(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary excludeRelationships:(NSArray *)excludeRelationships arrayRelationNamesMappingDictionary:(NSDictionary *)arrayRelationNamesMappingDictionary;
 
 @end

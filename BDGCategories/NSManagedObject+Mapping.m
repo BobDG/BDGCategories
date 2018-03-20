@@ -108,6 +108,11 @@
 
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary excludeRelationships:(NSArray *)excludeRelationships
 {
+    [self safeSetValuesForKeysWithDictionary:keyedValues dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships arrayRelationNamesMappingDictionary:nil];
+}
+
+-(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary excludeRelationships:(NSArray *)excludeRelationships arrayRelationNamesMappingDictionary:(NSDictionary *)arrayRelationNamesMappingDictionary
+{
     NSDictionary *attributes = [[self entity] attributesByName];
     for(NSString *attribute in attributes) {
         id value = [keyedValues objectForKey:attribute];
@@ -224,7 +229,11 @@
             [relationshipObject safeSetValuesForKeysWithDictionary:valueDict dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships];
             
             //Add it
-            NSMutableSet *set = [self mutableSetValueForKey:key];
+            NSString *relationKey = key;
+            if(arrayRelationNamesMappingDictionary[key]) {
+                relationKey = arrayRelationNamesMappingDictionary[key];
+            }
+            NSMutableSet *set = [self mutableSetValueForKey:relationKey];
             [set addObject:relationshipObject];
         }
     }
