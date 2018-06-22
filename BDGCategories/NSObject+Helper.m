@@ -60,12 +60,12 @@
 
 +(id)mapObjects:(NSArray *)objects toClass:(Class)objectClass
 {
-    return [self mapDictionary:objects toClass:objectClass dateFormatter:nil];
+    return [self mapObjects:objects toClass:objectClass dateFormatter:nil];
 }
 
 +(id)mapObjects:(NSArray *)objects toClass:(Class)objectClass dateFormatter:(NSDateFormatter *)dateFormatter
 {
-    return [self mapDictionary:objects toClass:objectClass dateFormatter:dateFormatter mappingDictionary:nil];
+    return [self mapObjects:objects toClass:objectClass dateFormatter:dateFormatter mappingDictionary:nil];
 }
 
 +(id)mapObjects:(NSArray *)objects toClass:(Class)objectClass dateFormatter:(NSDateFormatter *)dateFormatter mappingDictionary:(NSDictionary *)mappingDictionary
