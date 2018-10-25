@@ -111,7 +111,17 @@
     [self safeSetValuesForKeysWithDictionary:keyedValues dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships arrayRelationNamesMappingDictionary:nil];
 }
 
+-(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary excludeRelationships:(NSArray *)excludeRelationships dateFormatters:(NSDictionary *)dateFormatters
+{
+    [self safeSetValuesForKeysWithDictionary:keyedValues dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships arrayRelationNamesMappingDictionary:nil dateFormatters:dateFormatters];
+}
+
 -(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary excludeRelationships:(NSArray *)excludeRelationships arrayRelationNamesMappingDictionary:(NSDictionary *)arrayRelationNamesMappingDictionary
+{
+    [self safeSetValuesForKeysWithDictionary:keyedValues dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships arrayRelationNamesMappingDictionary:arrayRelationNamesMappingDictionary dateFormatters:nil];
+}
+
+-(void)safeSetValuesForKeysWithDictionary:(NSDictionary *)keyedValues dateFormatter:(NSDateFormatter *)dateFormatter context:(NSManagedObjectContext *)context includeArrays:(BOOL)includeArrays mappingDictionary:(NSDictionary *)mappingDictionary excludeRelationships:(NSArray *)excludeRelationships arrayRelationNamesMappingDictionary:(NSDictionary *)arrayRelationNamesMappingDictionary dateFormatters:(NSDictionary *)dateFormatters
 {
     NSDictionary *attributes = [[self entity] attributesByName];
     for(NSString *attribute in attributes) {
@@ -130,12 +140,18 @@
             value = [NSNumber numberWithInteger:[value integerValue]];
         } else if ((attributeType == NSFloatAttributeType) &&  ([value isKindOfClass:[NSString class]])) {
             value = [NSNumber numberWithDouble:[value doubleValue]];
-        } else if ((attributeType == NSDateAttributeType) && ([value isKindOfClass:[NSString class]]) && (dateFormatter != nil)) {
-            value = [dateFormatter dateFromString:value];
+        } else if ((attributeType == NSDateAttributeType) && ([value isKindOfClass:[NSString class]])) {
+            //Check dateformatters dictionary
+            if(dateFormatters[attribute]) {
+                NSDateFormatter *df = dateFormatters[attribute];
+                value = [df dateFromString:value];
+            }
+            else if(dateFormatter != nil) {
+                value = [dateFormatter dateFromString:value];
+            }
         }
         [self setValue:value forKey:attribute];
-    }
-    
+    }    
     
     NSDictionary *relationships = [[self entity] relationshipsByName];
     for(NSString *relationship in relationships) {
@@ -172,7 +188,7 @@
         }
         
         //Update values
-        [relationshipObject safeSetValuesForKeysWithDictionary:value dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships];
+        [relationshipObject safeSetValuesForKeysWithDictionary:value dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships dateFormatters:dateFormatters];
     }
     
     
@@ -226,7 +242,7 @@
             
             //Create and set values
             NSManagedObject *relationshipObject = [NSEntityDescription insertNewObjectForEntityForName:className inManagedObjectContext:context];
-            [relationshipObject safeSetValuesForKeysWithDictionary:valueDict dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships];
+            [relationshipObject safeSetValuesForKeysWithDictionary:valueDict dateFormatter:dateFormatter context:context includeArrays:includeArrays mappingDictionary:mappingDictionary excludeRelationships:excludeRelationships dateFormatters:dateFormatters];
             
             //Add it
             NSString *relationKey = key;
